@@ -1,4 +1,5 @@
 use master_mind::models::moves::{Data, ColorCombination, Codebreaker, Color, Solution};
+use dojo::world::{IWorldDispatcher, IWorldDispatcherImpl};
 // use dojo_starter::models::position::Position;
 
 // define the interface
@@ -75,9 +76,34 @@ mod actions {
             }
 
 
-            // @todo compare user chosen to code breaker
-            // @todo if they dont macth emit an event  so the front end askes the user to call play_game() again... and increase score which is number of attepmt by 1
-            // @todo if they match emit an event and update the score with wallet address (or name) to global leaderboard this is the only time they would send a transaction..the end.
+              // @todo compare user chosen to code breaker  ----> Done
+            // @todo if they dont macth emit an event  so the front end askes the user to call play_game() again...
+            //  and increase score which is number of attepmt by 1 ----> Done
+           
+             // Fetch the code breaker's solution
+             let solution = get!(world, player, Solution);
+
+             // Compare the user's chosen colors with the code breaker's solution
+             let user_combination = ColorCombination { color1, color2, color3, color4 };
+             let codebreaker_combination = solution.color;
+ 
+             if user_combination == codebreaker_combination {
+                 // If the user's combination matches the code breaker's combination
+                 emit!(world, Solution { player, color: user_combination });
+                 // Update the score (could be 0 or any other logic for a win)
+                 set!(world, Data { player, score: position.score, color: user_combination });
+             } else {
+                 // If the user's combination does not match the code breaker's combination
+                 // Increment the score by 1
+                 let new_score = position.score + 1;
+                 set!(world, Data { player, score: new_score, color: position.color });
+                 // Emit an event to notify the frontend to call play_game() again
+                 emit!(world, Data { player, score: new_score, color: position.color });
+             }
+         
+
+
+           // @todo if they match emit an event and update the score with wallet address (or name) to global leaderboard this is the only time they would send a transaction..the end.
         }
     }
 
