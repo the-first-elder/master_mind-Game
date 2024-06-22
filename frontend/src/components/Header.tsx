@@ -12,7 +12,7 @@ export default function Header() {
         <div className="flex flex-col items-end bg-zinc-100 rounded-md px-6 py-2">
           <p className="font-semibold">{`${address.slice(
             0,
-            6,
+            6
           )}...${address.slice(-4)}`}</p>
           <p
             onClick={() => disconnect()}
