@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import Header from "./components/Header";
 const NUM_ROWS = 10;
 const CODE_LENGTH = 4;
 const COLORS: { [key: number]: string } = {
@@ -137,6 +137,7 @@ const App: React.FC = () => {
       className="min-h-screen flex items-center justify-center"
       style={{ backgroundColor: "#4b2e2e" }}
     >
+      <Header />
       <div className="p-4 bg-white shadow-lg rounded">
         {isSettingSecretCode ? (
           <div className="mb-4">
@@ -234,7 +235,7 @@ const App: React.FC = () => {
                           fb === "black"
                             ? "#000"
                             : fb === "white"
-                            ? "#fff"
+                            ? "#879cb0"
                             : "#d1d5db",
                       }}
                     ></div>
