@@ -48,12 +48,17 @@ mod actions {
             emit!(world, (Data { player, score: 0, color: new_color }));
             new_color
         }
+
+        
         fn play_game(
             ref world: IWorldDispatcher, color1: Color, color2: Color, color3: Color, color4: Color
         ) {
             let player = get_caller_address();
             let mut number : usize = 1;
             let position = get!(world, player, (Data));
+            let solution = get!(world, player, (Solution));
+             let user_combination = ColorCombination { color1, color2, color3, color4 };
+             let codebreaker_combination = solution.color;
             assert!(position.score > 0, "Create a new game");
 
             // ensure the user picks colors they initialy initiated.....
@@ -81,24 +86,22 @@ mod actions {
             //  and increase score which is number of attepmt by 1 ----> Done
            
              // Fetch the code breaker's solution
-             let solution = get!(world, player, Solution);
 
              // Compare the user's chosen colors with the code breaker's solution
-             let user_combination = ColorCombination { color1, color2, color3, color4 };
-             let codebreaker_combination = solution.color;
+            
  
-             if user_combination == codebreaker_combination {
+             if user_combination == codebreaker_combination { //@note two diff struct
                  // If the user's combination matches the code breaker's combination
-                 emit!(world, Solution { player, color: user_combination });
+                //  emit!(world, Solution { player, color: user_combination });
                  // Update the score (could be 0 or any other logic for a win)
-                 set!(world, Data { player, score: position.score, color: user_combination });
+                //  set!(world, Data { player, score: position.score, color: user_combination });
              } else {
                  // If the user's combination does not match the code breaker's combination
                  // Increment the score by 1
-                 let new_score = position.score + 1;
-                 set!(world, Data { player, score: new_score, color: position.color });
-                 // Emit an event to notify the frontend to call play_game() again
-                 emit!(world, Data { player, score: new_score, color: position.color });
+                //  let new_score = position.score + 1;
+                //  set!(world, Data { player, score: new_score, color: position.color });
+                //  // Emit an event to notify the frontend to call play_game() again
+                //  emit!(world, Data { player, score: new_score, color: position.color });
              }
          
 
