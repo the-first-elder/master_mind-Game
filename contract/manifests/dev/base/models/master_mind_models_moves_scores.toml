@@ -1,0 +1,20 @@
+kind = "DojoModel"
+class_hash = "0x157d10e8c0021f2d7da9845db99521f82d8305ef03e2e2b9876ee269985bf2b"
+original_class_hash = "0x157d10e8c0021f2d7da9845db99521f82d8305ef03e2e2b9876ee269985bf2b"
+abi = "manifests/dev/abis/base/models/master_mind_models_moves_scores.json"
+name = "master_mind::models::moves::scores"
+
+[[members]]
+name = "player"
+type = "ContractAddress"
+key = true
+
+[[members]]
+name = "white_face"
+type = "u32"
+key = false
+
+[[members]]
+name = "black_face"
+type = "u32"
+key = false

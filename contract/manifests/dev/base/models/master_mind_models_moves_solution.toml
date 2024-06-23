@@ -1,0 +1,15 @@
+kind = "DojoModel"
+class_hash = "0x2b5a301cdda960645b3acaf585eea27852e72f819f939e395405bb30cf47978"
+original_class_hash = "0x2b5a301cdda960645b3acaf585eea27852e72f819f939e395405bb30cf47978"
+abi = "manifests/dev/abis/base/models/master_mind_models_moves_solution.json"
+name = "master_mind::models::moves::solution"
+
+[[members]]
+name = "player"
+type = "ContractAddress"
+key = true
+
+[[members]]
+name = "color"
+type = "Codebreaker"
+key = false
