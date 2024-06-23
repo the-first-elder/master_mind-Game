@@ -1,4 +1,4 @@
-use master_mind::models::moves::{Data, ColorCombination, Codebreaker, Color, Solution};
+use master_mind::models::moves::{Data, ColorCombination, Codebreaker, Color, Solution, Scores};
 use dojo::world::{IWorldDispatcher, IWorldDispatcherImpl};
 // use dojo_starter::models::position::Position;
 
@@ -19,7 +19,7 @@ trait IActions {
 mod actions {
     use super::{IActions};
     use starknet::{ContractAddress, get_caller_address, get_contract_address};
-    use master_mind::models::moves::{Data, ColorCombination, Codebreaker, Color, Solution};
+    use master_mind::models::moves::{Data, ColorCombination, Codebreaker, Color, Solution, Scores};
     use origami::random::dice::{DiceTrait};
 
     #[abi(embed_v0)]
@@ -29,11 +29,8 @@ mod actions {
         ) -> ColorCombination {
             let player = get_caller_address();
             let new_color = ColorCombination { color1, color2, color3, color4, };
-            // store player color into an array
-            // so that code breaker can selct randomly from it
+            
             let mut arr = ArrayTrait::<Color>::new();
-
-            // intentionally making this five becasue origami doesnt count 0 for random number..
 
             arr.append(color1);
             arr.append(color1);
@@ -48,66 +45,47 @@ mod actions {
             emit!(world, (Data { player, score: 0, color: new_color }));
             new_color
         }
+
+        // begin game Play
         fn play_game(
             ref world: IWorldDispatcher, color1: Color, color2: Color, color3: Color, color4: Color
         ) {
             let player = get_caller_address();
-            let mut number : usize = 1;
+            // let mut number: usize = 1;
             let position = get!(world, player, (Data));
+            let solution = get!(world, player, (Solution));
+
+            let user_combination = ColorCombination { color1, color2, color3, color4 };
+            let codebreaker_combination = solution.color;
+
+            let user_color1 = position.color.color1;
+            let user_color2 = position.color.color2;
+            let user_color3 = position.color.color3;
+            let user_color4 = position.color.color4;
+            let color1 = solution.color.color1;
+            let color2 = solution.color.color2;
+            let color2 = solution.color.color3;
+            let color4 = solution.color.color4;
+
             assert!(position.score > 0, "Create a new game");
 
-            // ensure the user picks colors they initialy initiated.....
-            let mut arr = ArrayTrait::<Color>::new();
-            arr.append(position.color.color1);
-            arr.append(position.color.color2);
-            arr.append(position.color.color3);
-            arr.append(position.color.color4);
-            loop {
-                if let Option::Some(_) = arr.get(number) {
-                number += 1;
+            let (white, black) = compare_structs(
+                user_color1, user_color2, user_color3, user_color4, color1, color2, color3, color4
+            );
 
-                } else {
-                    // Handle the error case where the color was not found
-                    panic!("Color at position {} was not initially chosen.", number);
-                }        
-                if number >= arr.len() {
-                    break;
-                }
+            if black == 4 { 
+                set!(world, Data { player, score: position.score, color: user_combination });
+                emit!(world, Solution { player, color: codebreaker_combination });
+            } else { 
+                let new_score = position.score + 1;
+                set!(world, Data { player, score: new_score, color: position.color });
+                set!(world, Scores { player, white_face : white, black_face: black });
+                emit!(world, Data { player, score: new_score, color: position.color });
+                emit!(world, Scores {player, white_face: white, black_face: black});
             }
-
-
-              // @todo compare user chosen to code breaker  ----> Done
-            // @todo if they dont macth emit an event  so the front end askes the user to call play_game() again... and increase score which is number of attepmt by 1
-           
-             // Fetch the code breaker's solution
-             let solution = get!(world, player, Solution);
-
-             // Compare the user's chosen colors with the code breaker's solution
-             let user_combination = ColorCombination { color1, color2, color3, color4 };
-             let codebreaker_combination = solution.color;
- 
-             if user_combination == codebreaker_combination {
-                 // If the user's combination matches the code breaker's combination
-                 emit!(world, Solution { player, color: user_combination });
-                 // Update the score (could be 0 or any other logic for a win)
-                 set!(world, Data { player, score: position.score, color: user_combination });
-             } else {
-                 // If the user's combination does not match the code breaker's combination
-                 // Increment the score by 1
-                 let new_score = position.score + 1;
-                 set!(world, Data { player, score: new_score, color: position.color });
-                 // Emit an event to notify the frontend to call play_game() again
-                 emit!(world, Data { player, score: new_score, color: position.color });
-             }
-         
-
-
-           // @todo if they match emit an event and update the score with wallet address (or name) to global leaderboard this is the only time they would send a transaction..the end.
         }
     }
 
-    // #[generate_trait]
-    // impl InternalImpl of InternalTrait {
     fn _codeBreakerSolution(
         world: IWorldDispatcher, user: ContractAddress, user_color: Array<Color>
     ) {
@@ -133,8 +111,38 @@ mod actions {
 
         emit!(world, (Solution { player: user, color: result }));
     }
+
+    fn compare_structs(
+        user_color1: Color,
+        user_color2: Color,
+        user_color3: Color,
+        user_color4: Color,
+        color1: Color,
+        color2: Color,
+        color3: Color,
+        color4: Color
+    ) -> (u32, u32) {
+        // Compare the 'name' fields
+        let mut white = 0;
+        let mut black = 0;
+        if user_color1 == color1 {
+           black+= 1;
+        }
+        if user_color2 == color2 {
+           black+= 1;
+        }
+        if user_color3 == color3 {
+           black+= 1;
+        }
+        if user_color4 == color4 {
+           black+= 1;
+        }
+
+        white = 4 - black;
+        (white, black)
+    // Compare the 'age' fields
+
+    }
 // }
 }
-
-
 
