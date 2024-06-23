@@ -1,6 +1,6 @@
 use starknet::ContractAddress;
 
-#[derive(Copy, Drop, Serde, Introspect)]
+#[derive(Copy, Drop, Serde, PartialEq, Introspect)]
 #[dojo::model]
 #[dojo::event]
 struct Data {
@@ -10,7 +10,7 @@ struct Data {
     color: ColorCombination,
 }
 
-#[derive(Copy, Drop, Serde, Introspect)]
+#[derive(Copy, Drop, Serde, PartialEq, Introspect)]
 #[dojo::model]
 #[dojo::event]
 struct Solution {
@@ -19,7 +19,17 @@ struct Solution {
     color: Codebreaker
 }
 
-#[derive(Copy, Drop, Serde, Introspect)]
+#[derive(Copy, Drop, Serde, PartialEq, Introspect)]
+#[dojo::model]
+#[dojo::event]
+struct Scores{
+    #[key]
+    player: ContractAddress,
+    white_face: u32,
+    black_face: u32
+}
+
+#[derive(Copy, Drop, Serde, PartialEq, Introspect)]
 struct ColorCombination {
     color1: Color,
     color2: Color,
@@ -27,7 +37,7 @@ struct ColorCombination {
     color4: Color,
 }
 
-#[derive(Copy, Drop, Serde, Introspect)]
+#[derive(Copy, Drop, Serde, PartialEq, Introspect)]
 struct Codebreaker {
     color1: Color,
     color2: Color,
@@ -35,7 +45,7 @@ struct Codebreaker {
     color4: Color,
 }
 
-#[derive(Serde, Copy, Drop, Introspect)]
+#[derive(Serde, Copy, Drop, PartialEq, Introspect)]
 enum Color {
     Red,
     Blue,
@@ -45,22 +55,6 @@ enum Color {
     Orange,
 }
 
-
-// struct Moves {
-//     #[key]
-//     player: ContractAddress,
-//     remaining: u8,
-//     last_direction: Direction
-// }
-
-// #[derive(Serde, Copy, Drop, Introspect)]
-// enum Direction {
-//     None,
-//     Left,
-//     Right,
-//     Up,
-//     Down,
-// }
 
 impl ColorIntoFelt252 of Into<Color, felt252> {
     fn into(self: Color) -> felt252 {
@@ -74,16 +68,6 @@ impl ColorIntoFelt252 of Into<Color, felt252> {
         }
     }
 }
-// impl DirectionIntoFelt252 of Into<Direction, felt252> {
-//     fn into(self: Direction) -> felt252 {
-//         match self {
-//             Direction::None => 0,
-//             Direction::Left => 1,
-//             Direction::Right => 2,
-//             Direction::Up => 3,
-//             Direction::Down => 4,
-//         }
-//     }
-// }
+
 
 
