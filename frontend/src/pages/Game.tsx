@@ -5,6 +5,7 @@ import GameBoard from '../components/GameBoard';
 import Leaderboard from '../components/Leaderboard';
 import { useAccount } from "@starknet-react/core";
 import { toast } from 'react-hot-toast';
+import ConnectModal from '../components/starknet/ConnectModal';
 
 interface ColorPickerState {
     rowIndex: number | null;
@@ -155,8 +156,12 @@ const Game: React.FC = () => {
         setSection(button);
     };
 
-    if (!address) return <div className='min-h-[calc(100vh-88px)] flex items-center justify-center'>
-        <p className='bg-white w-fit px-20 py-10 shadow-lg rounded font-semibold text-2xl'>Connect your wallet 🫡 </p>
+    if (!address) return <div className='min-h-[calc(100vh-88px)] flex items-center justify-center text-lg'>
+        <div className='bg-white w-fit px-20 py-10 shadow-lg rounded flex flex-col gap-5 items-center justify-center'>
+            <ConnectModal />
+            {/* <p className='text-lg'>Connect your wallet 🫡 </p> */}
+            <p className='w-[30vw] text-center text-base'>Please connect your wallet to start the game. This will allow us to save your progress and scores.</p>
+        </div>
     </div>;
 
     return (
@@ -186,20 +191,22 @@ const Game: React.FC = () => {
                         </button>
                     </div>
                     <div className="flex items-start justify-center gap-20">
-                        {section === 'play' ?
-                            <GameBoard
-                                secretCode={secretCode}
-                                guesses={guesses}
-                                feedback={feedback}
-                                handlePegClick={handlePegClick}
-                                colorPicker={colorPicker}
-                                selectColor={selectColor}
-                                dynamicTopClassName={dynamicTopClassName}
-                                currentRow={currentRow}
-                                handleCheck={handleCheck}
-                                gameOver={gameOver}
-                                gameWon={gameWon}
-                            />
+                        {section === 'play' ? (
+                            <div className='flex flex-col items-center justify-center gap-10 text-white text-center'>
+                                <p>Make your guess by clicking on the pegs to select colors. <br/> Once satisfied with your guess, click Check.</p>
+                                <GameBoard
+                                    secretCode={secretCode}
+                                    guesses={guesses}
+                                    feedback={feedback}
+                                    handlePegClick={handlePegClick}
+                                    colorPicker={colorPicker}
+                                    selectColor={selectColor}
+                                    dynamicTopClassName={dynamicTopClassName}
+                                    currentRow={currentRow}
+                                    handleCheck={handleCheck}
+                                    gameOver={gameOver}
+                                    gameWon={gameWon}
+                                /></div>)
                             :
                             <Leaderboard leaderboard={leaderboard} />
                         }

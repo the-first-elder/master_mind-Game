@@ -14,10 +14,11 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ leaderboard }) => {
                         <p className="text-3xl text-white font-bold">45</p>
                     </div>
                 </div>
-                <div>
-                    <p className="font-bold text-xl mb-5 text-white">Leaderboard</p>
+                <div className='flex flex-col gap-3'>
+                    <p className="font-bold text-xl text-white">Leaderboard</p>
+                    <p className='text-gray-300 mb-5'>Check out the top players and their scores below:</p>
                     <div className="flex flex-col gap-5">
-                        <div className="bg-white px-5 py-3 text-lg shadow-lg rounded flex flex-col gap-8">
+                        <div className="bg-white p-10 text-lg shadow-lg rounded flex flex-col gap-8">
                             {leaderboard.map((wallet, index) => (
                                 <div key={wallet.address} className="flex flex-row justify-between gap-20 p-2 px-10">
                                     <div>{index + 1}</div>

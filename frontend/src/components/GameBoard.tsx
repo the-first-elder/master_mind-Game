@@ -90,9 +90,9 @@ const GameBoard: React.FC<GameBoardProps> = ({
                 {gameOver && (
                     <div className="mt-4 text-center">
                         {gameWon ? (
-                            <div className="text-green-500">You won! Congratulations!</div>
+                            <div className="text-green-500">You won! Congratulations, you cracked the code.</div>
                         ) : (
-                            <div className="text-red-500">Game over! The secret code was displayed above.</div>
+                            <div className="text-red-500">Game over! The secret code is displayed above.</div>
                         )}
                     </div>
                 )}
