@@ -29,9 +29,9 @@ const GameBoard: React.FC<GameBoardProps> = ({
     gameWon,
 }) => {
     return (
-        <div className="bg-white w-fit px-20 py-10 shadow-lg rounded">
+        <div className="bg-white w-fit px-20 py-10 text-center shadow-lg rounded">
             <div>
-                <div className="flex items-center space-x-4 mb-4">
+                <div className="flex items-center space-x-8 mb-4">
                     {secretCode.map((color, index) => (
                         <div
                             key={index}
@@ -45,7 +45,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
                 </div>
 
                 {guesses.map((guess, rowIndex) => (
-                    <div key={rowIndex} className="flex items-center space-x-4 mb-4">
+                    <div key={rowIndex} className="flex items-center space-x-8 mb-4">
                         {guess.map((color, pegIndex) => (
                             <div key={pegIndex} className="">
                                 <div
@@ -82,7 +82,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
                 ))}
                 <button
                     onClick={handleCheck}
-                    className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+                    className="mt-4 px-4 py-2 text-lg font-bold bg-blue-500 text-white rounded hover:bg-blue-700"
                     disabled={gameOver}
                 >
                     Check

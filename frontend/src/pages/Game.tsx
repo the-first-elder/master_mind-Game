@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { SetStateAction, useState } from 'react';
 import { NUM_ROWS, CODE_LENGTH } from '../constants/constants';
 import SecretCodeSetter from '../components/SecretCodeSetter';
 import GameBoard from '../components/GameBoard';
@@ -149,6 +149,12 @@ const Game: React.FC = () => {
 
     const { address } = useAccount();
 
+    const [section, setSection] = useState("play")
+
+    const handleClick = (button: SetStateAction<string>) => {
+        setSection(button);
+    };
+
     if (!address) return <div className='min-h-[calc(100vh-88px)] flex items-center justify-center'>
         <p className='bg-white w-fit px-20 py-10 shadow-lg rounded font-semibold text-2xl'>Connect your wallet 🫡 </p>
     </div>;
@@ -164,21 +170,40 @@ const Game: React.FC = () => {
                     handleSecretCodeSubmit={handleSecretCodeSubmit}
                 />
             ) : (
-                <div className="flex items-start justify-center gap-20">
-                    <Leaderboard leaderboard={leaderboard} />
-                    <GameBoard
-                        secretCode={secretCode}
-                        guesses={guesses}
-                        feedback={feedback}
-                        handlePegClick={handlePegClick}
-                        colorPicker={colorPicker}
-                        selectColor={selectColor}
-                        dynamicTopClassName={dynamicTopClassName}
-                        currentRow={currentRow}
-                        handleCheck={handleCheck}
-                        gameOver={gameOver}
-                        gameWon={gameWon}
-                    />
+                <div>
+                    <div className='m-10 text-center text-2xl flex justify-center items-center gap-60 font-bold text-[#fff]'>
+                        <button
+                            className={section === 'play' ? 'bg-[#fff] text-[#333862] font-bold px-4 py-2 rounded-lg border' : ''}
+                            onClick={() => handleClick('play')}
+                        >
+                            Play
+                        </button>
+                        <button
+                            className={section === 'stats' ? 'bg-[#fff] text-[#333862] font-bold px-4 py-2 rounded-lg text-white border' : ''}
+                            onClick={() => handleClick('stats')}
+                        >
+                            Stats
+                        </button>
+                    </div>
+                    <div className="flex items-start justify-center gap-20">
+                        {section === 'play' ?
+                            <Leaderboard leaderboard={leaderboard} />
+                            :
+                            <GameBoard
+                                secretCode={secretCode}
+                                guesses={guesses}
+                                feedback={feedback}
+                                handlePegClick={handlePegClick}
+                                colorPicker={colorPicker}
+                                selectColor={selectColor}
+                                dynamicTopClassName={dynamicTopClassName}
+                                currentRow={currentRow}
+                                handleCheck={handleCheck}
+                                gameOver={gameOver}
+                                gameWon={gameWon}
+                            />
+                        }
+                    </div>
                 </div>
             )}
         </div>

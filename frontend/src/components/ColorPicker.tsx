@@ -16,7 +16,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
 }) => {
     if (colorPicker.rowIndex === null || colorPicker.pegIndex === null) return null;
     return (
-        <div className={`absolute ${dynamicTopClassName(currentRow)} left-[60%] flex space-x-1 z-10 bg-white p-2 rounded shadow-lg`}>
+        <div className={`absolute ${dynamicTopClassName(currentRow)} left-[40%] flex space-x-1 z-10 bg-white p-2 rounded shadow-lg`}>
             {Object.entries(COLORS).map(([key, value]) => (
                 <div key={key}>
                     <div
