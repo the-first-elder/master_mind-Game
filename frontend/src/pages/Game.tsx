@@ -13,11 +13,11 @@ interface ColorPickerState {
 }
 
 const Game: React.FC = () => {
-    const [secretCode, setSecretCode] = useState<(string | null)[]>(
-        Array(CODE_LENGTH).fill(null)
-    );
+    // const [secretCode, setSecretCode] = useState<(string | null)[]>(
+    //     ["#e11d48", "#e11d48", "#e11d48", "#e11d48"]
+    // );
+     const secretCode = ["#e11d48", "#e11d48", "#e11d48", "#e11d48"];
     // const [isSettingSecretCode, setIsSettingSecretCode] = useState(true);
-    const isSettingSecretCode = true;
     const [guesses, setGuesses] = useState<(string | null)[][]>(() =>
         Array.from({ length: NUM_ROWS }, () =>
             Array.from({ length: CODE_LENGTH }, () => null)
@@ -54,15 +54,15 @@ const Game: React.FC = () => {
     const selectColor = (color: string) => {
         const { rowIndex, pegIndex } = colorPicker;
         if (rowIndex !== null && pegIndex !== null) {
-            if (isSettingSecretCode) {
-                const newSecretCode = [...secretCode];
-                newSecretCode[pegIndex] = color;
-                setSecretCode(newSecretCode);
-            } else {
+            // if (isSettingSecretCode) {
+            //     const newSecretCode = [...secretCode];
+            //     newSecretCode[pegIndex] = color;
+            //     setSecretCode(newSecretCode);
+            // } else {
                 const newGuesses = [...guesses];
                 newGuesses[rowIndex][pegIndex] = color;
                 setGuesses(newGuesses);
-            }
+            // }
         }
         setColorPicker({ rowIndex: null, pegIndex: null });
     };
