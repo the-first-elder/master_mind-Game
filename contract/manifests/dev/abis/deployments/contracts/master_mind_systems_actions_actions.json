@@ -116,7 +116,7 @@
     "items": [
       {
         "type": "function",
-        "name": "new",
+        "name": "new_game",
         "inputs": [
           {
             "name": "color1",
@@ -140,6 +140,30 @@
             "type": "master_mind::models::moves::ColorCombination"
           }
         ],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "play_game",
+        "inputs": [
+          {
+            "name": "color1",
+            "type": "master_mind::models::moves::Color"
+          },
+          {
+            "name": "color2",
+            "type": "master_mind::models::moves::Color"
+          },
+          {
+            "name": "color3",
+            "type": "master_mind::models::moves::Color"
+          },
+          {
+            "name": "color4",
+            "type": "master_mind::models::moves::Color"
+          }
+        ],
+        "outputs": [],
         "state_mutability": "external"
       }
     ]

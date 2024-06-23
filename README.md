@@ -93,3 +93,17 @@ The key pegs do not specify which particular pegs in the guess are correct.
    - Yes, you can play in teams or take turns being the codemaker and codebreaker.
 
 Enjoy playing Mastermind and sharpen your code-breaking skills!
+
+Deployment success 🚀
+
+Configuration:
+World: 0x3685b56189052cadc904dbc808087089234e0e8ed41d0957790f381e5f3c1bf
+RPC: https://api.cartridge.gg/x/mastermind/katana
+Start Block: 1
+Index Pending: false
+
+Endpoints:
+GRAPHQL: https://api.cartridge.gg/x/mastermind/torii/graphql
+GRPC: https://api.cartridge.gg/x/mastermind/torii
+
+Stream logs with `slot deployments logs mastermind torii -f`
