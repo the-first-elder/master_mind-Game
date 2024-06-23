@@ -16,7 +16,7 @@ const Game: React.FC = () => {
     // const [secretCode, setSecretCode] = useState<(string | null)[]>(
     //     ["#e11d48", "#e11d48", "#e11d48", "#e11d48"]
     // );
-     const secretCode = ["#e11d48", "#e11d48", "#e11d48", "#e11d48"];
+    const secretCode: (string | null)[] = ["#e11d48", "#e11d48", "#e11d48", "#e11d48"];
     // const [isSettingSecretCode, setIsSettingSecretCode] = useState(true);
     const [guesses, setGuesses] = useState<(string | null)[][]>(() =>
         Array.from({ length: NUM_ROWS }, () =>
@@ -59,9 +59,9 @@ const Game: React.FC = () => {
             //     newSecretCode[pegIndex] = color;
             //     setSecretCode(newSecretCode);
             // } else {
-                const newGuesses = [...guesses];
-                newGuesses[rowIndex][pegIndex] = color;
-                setGuesses(newGuesses);
+            const newGuesses = [...guesses];
+            newGuesses[rowIndex][pegIndex] = color;
+            setGuesses(newGuesses);
             // }
         }
         setColorPicker({ rowIndex: null, pegIndex: null });
@@ -167,43 +167,43 @@ const Game: React.FC = () => {
 
     return (
         <div className="flex p-10 justify-center items-center min-h-[calc(100vh-96px)]">
-                <div>
-                    <div className='mb-10 text-center text-2xl flex justify-center items-center gap-60 font-bold text-[#fff]'>
-                        <button
-                            className={section === 'play' ? 'bg-[#fff] text-[#333862] font-bold px-4 py-2 rounded-lg border' : ''}
-                            onClick={() => handleClick('play')}
-                        >
-                            Play
-                        </button>
-                        <button
-                            className={section === 'stats' ? 'bg-[#fff] text-[#333862] font-bold px-4 py-2 rounded-lg border' : ''}
-                            onClick={() => handleClick('stats')}
-                        >
-                            Stats
-                        </button>
-                    </div>
-                    <div className="flex items-start justify-center gap-20">
-                        {section === 'play' ? (
-                            <div className='flex flex-col items-center justify-center gap-10 text-white text-center'>
-                                <p>Make your guess by clicking on the pegs to select colors. <br/> Once satisfied with your guess, click Check.</p>
-                                <GameBoard
-                                    secretCode={secretCode}
-                                    guesses={guesses}
-                                    feedback={feedback}
-                                    handlePegClick={handlePegClick}
-                                    colorPicker={colorPicker}
-                                    selectColor={selectColor}
-                                    dynamicTopClassName={dynamicTopClassName}
-                                    currentRow={currentRow}
-                                    handleCheck={handleCheck}
-                                    gameOver={gameOver}
-                                    gameWon={gameWon}
-                                /></div>)
-                            :
-                            <Leaderboard leaderboard={leaderboard} />
-                        }
-                    </div>
+            <div>
+                <div className='mb-10 text-center text-2xl flex justify-center items-center gap-60 font-bold text-[#fff]'>
+                    <button
+                        className={section === 'play' ? 'bg-[#fff] text-[#333862] font-bold px-4 py-2 rounded-lg border' : ''}
+                        onClick={() => handleClick('play')}
+                    >
+                        Play
+                    </button>
+                    <button
+                        className={section === 'stats' ? 'bg-[#fff] text-[#333862] font-bold px-4 py-2 rounded-lg border' : ''}
+                        onClick={() => handleClick('stats')}
+                    >
+                        Stats
+                    </button>
                 </div>
+                <div className="flex items-start justify-center gap-20">
+                    {section === 'play' ? (
+                        <div className='flex flex-col items-center justify-center gap-10 text-white text-center'>
+                            <p>Make your guess by clicking on the pegs to select colors. <br /> Once satisfied with your guess, click Check.</p>
+                            <GameBoard
+                                secretCode={secretCode}
+                                guesses={guesses}
+                                feedback={feedback}
+                                handlePegClick={handlePegClick}
+                                colorPicker={colorPicker}
+                                selectColor={selectColor}
+                                dynamicTopClassName={dynamicTopClassName}
+                                currentRow={currentRow}
+                                handleCheck={handleCheck}
+                                gameOver={gameOver}
+                                gameWon={gameWon}
+                            /></div>)
+                        :
+                        <Leaderboard leaderboard={leaderboard} />
+                    }
+                </div>
+            </div>
         </div>
     );
 };
