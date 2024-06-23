@@ -1,10 +1,10 @@
 import React, { SetStateAction, useState } from 'react';
 import { NUM_ROWS, CODE_LENGTH } from '../constants/constants';
-import SecretCodeSetter from '../components/SecretCodeSetter';
+// import { toast } from 'react-hot-toast';
+// import SecretCodeSetter from '../components/SecretCodeSetter';
 import GameBoard from '../components/GameBoard';
 import Leaderboard from '../components/Leaderboard';
 import { useAccount } from "@starknet-react/core";
-import { toast } from 'react-hot-toast';
 import ConnectModal from '../components/starknet/ConnectModal';
 
 interface ColorPickerState {
@@ -16,7 +16,8 @@ const Game: React.FC = () => {
     const [secretCode, setSecretCode] = useState<(string | null)[]>(
         Array(CODE_LENGTH).fill(null)
     );
-    const [isSettingSecretCode, setIsSettingSecretCode] = useState(true);
+    // const [isSettingSecretCode, setIsSettingSecretCode] = useState(true);
+    const isSettingSecretCode = true;
     const [guesses, setGuesses] = useState<(string | null)[][]>(() =>
         Array.from({ length: NUM_ROWS }, () =>
             Array.from({ length: CODE_LENGTH }, () => null)
@@ -117,13 +118,13 @@ const Game: React.FC = () => {
         }
     };
 
-    const handleSecretCodeSubmit = () => {
-        if (secretCode.every((color) => color !== null)) {
-            setIsSettingSecretCode(false);
-        } else {
-            toast.error("Please select a color for all pegs in the secret code.");
-        }
-    };
+    // const handleSecretCodeSubmit = () => {
+    //     if (secretCode.every((color) => color !== null)) {
+    //         setIsSettingSecretCode(false);
+    //     } else {
+    //         toast.error("Please select a color for all pegs in the secret code.");
+    //     }
+    // };
 
     const dynamicTopClassName = (currentRow: number) => {
         const topValue = 35 + (7.5 * currentRow);
@@ -166,15 +167,6 @@ const Game: React.FC = () => {
 
     return (
         <div className="flex p-10 justify-center items-center min-h-[calc(100vh-96px)]">
-            {isSettingSecretCode ? (
-                <SecretCodeSetter
-                    secretCode={secretCode}
-                    colorPicker={colorPicker}
-                    selectColor={selectColor}
-                    setColorPicker={setColorPicker}
-                    handleSecretCodeSubmit={handleSecretCodeSubmit}
-                />
-            ) : (
                 <div>
                     <div className='mb-10 text-center text-2xl flex justify-center items-center gap-60 font-bold text-[#fff]'>
                         <button
@@ -212,7 +204,6 @@ const Game: React.FC = () => {
                         }
                     </div>
                 </div>
-            )}
         </div>
     );
 };
