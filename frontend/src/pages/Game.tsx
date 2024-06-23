@@ -171,7 +171,7 @@ const Game: React.FC = () => {
                 />
             ) : (
                 <div>
-                    <div className='m-10 text-center text-2xl flex justify-center items-center gap-60 font-bold text-[#fff]'>
+                    <div className='mb-10 text-center text-2xl flex justify-center items-center gap-60 font-bold text-[#fff]'>
                         <button
                             className={section === 'play' ? 'bg-[#fff] text-[#333862] font-bold px-4 py-2 rounded-lg border' : ''}
                             onClick={() => handleClick('play')}
@@ -179,7 +179,7 @@ const Game: React.FC = () => {
                             Play
                         </button>
                         <button
-                            className={section === 'stats' ? 'bg-[#fff] text-[#333862] font-bold px-4 py-2 rounded-lg text-white border' : ''}
+                            className={section === 'stats' ? 'bg-[#fff] text-[#333862] font-bold px-4 py-2 rounded-lg border' : ''}
                             onClick={() => handleClick('stats')}
                         >
                             Stats
@@ -187,8 +187,6 @@ const Game: React.FC = () => {
                     </div>
                     <div className="flex items-start justify-center gap-20">
                         {section === 'play' ?
-                            <Leaderboard leaderboard={leaderboard} />
-                            :
                             <GameBoard
                                 secretCode={secretCode}
                                 guesses={guesses}
@@ -202,6 +200,8 @@ const Game: React.FC = () => {
                                 gameOver={gameOver}
                                 gameWon={gameWon}
                             />
+                            :
+                            <Leaderboard leaderboard={leaderboard} />
                         }
                     </div>
                 </div>
