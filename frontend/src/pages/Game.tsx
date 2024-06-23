@@ -1,9 +1,10 @@
-import { NUM_ROWS, CODE_LENGTH } from '../constants/constants';
-
 import React, { useState } from 'react';
+import { NUM_ROWS, CODE_LENGTH } from '../constants/constants';
 import SecretCodeSetter from '../components/SecretCodeSetter';
 import GameBoard from '../components/GameBoard';
 import Leaderboard from '../components/Leaderboard';
+import { useAccount } from "@starknet-react/core";
+import { toast } from 'react-hot-toast';
 
 interface ColorPickerState {
     rowIndex: number | null;
@@ -119,7 +120,7 @@ const Game: React.FC = () => {
         if (secretCode.every((color) => color !== null)) {
             setIsSettingSecretCode(false);
         } else {
-            alert("Please select a color for all pegs in the secret code.");
+            toast("Please select a color for all pegs in the secret code.");
         }
     };
 
@@ -146,8 +147,14 @@ const Game: React.FC = () => {
         },
     ];
 
+    const { address } = useAccount();
+
+    if (!address) return <div className='min-h-[calc(100vh-88px)] flex items-center justify-center'>
+        <p className='bg-white w-fit px-20 py-10 shadow-lg rounded font-semibold text-2xl'>Connect your wallet 🫡 </p>
+    </div>;
+
     return (
-        <div className="flex p-10 justify-center items-center min-h-screen">
+        <div className="flex p-10 justify-center items-center min-h-[calc(100vh-96px)]">
             {isSettingSecretCode ? (
                 <SecretCodeSetter
                     secretCode={secretCode}

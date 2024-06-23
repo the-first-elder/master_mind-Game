@@ -7,7 +7,7 @@ import Game from "./pages/Game";
 
 function NoMatch() {
   return (
-    <div className=" flex flex-col items-center justify-center text-4xl min-h-screen">
+    <div className=" flex flex-col items-center justify-center text-4xl min-h-[calc(100vh-88px)]">
       <h2>404: Page Not Found</h2>
       <p>Uh oh! Wrong page 😞</p>
     </div>
