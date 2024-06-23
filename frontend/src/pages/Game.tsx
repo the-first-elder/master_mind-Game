@@ -120,7 +120,7 @@ const Game: React.FC = () => {
         if (secretCode.every((color) => color !== null)) {
             setIsSettingSecretCode(false);
         } else {
-            toast("Please select a color for all pegs in the secret code.");
+            toast.error("Please select a color for all pegs in the secret code.");
         }
     };
 
