@@ -132,6 +132,11 @@ const App: React.FC = () => {
     }
   };
 
+  const dynamicTopClassName = (currentRow: number) => {
+    const topValue = 35 + (7.5 * currentRow);
+    return `top-[${topValue}%]`;
+  };
+
   return (
     <div
       className="min-h-screen"
@@ -145,7 +150,7 @@ const App: React.FC = () => {
               <div className="text-center mb-4">Set the Secret Code</div>
               <div className="flex items-center justify-center space-x-4">
                 {secretCode.map((color, pegIndex) => (
-                  <div key={pegIndex} className="relative">
+                  <div key={pegIndex} className="">
                     <div
                       onClick={() => setColorPicker({ rowIndex: -1, pegIndex })}
                       className={`w-10 h-10 rounded-full cursor-pointer`}
@@ -156,7 +161,7 @@ const App: React.FC = () => {
                     ></div>
                     {colorPicker.rowIndex === -1 &&
                       colorPicker.pegIndex === pegIndex && (
-                        <div className="absolute top-12 left-0 flex space-x-1 z-10 bg-white p-2 rounded shadow-lg">
+                        <div className="absolute top-[60%] left-[45%] flex space-x-1 z-10 bg-white p-2 rounded shadow-lg">
                           {Object.entries(COLORS).map(([key, value]) => (
                             <div
                               key={key}
@@ -199,7 +204,7 @@ const App: React.FC = () => {
               {guesses.map((guess, rowIndex) => (
                 <div key={rowIndex} className="flex items-center space-x-4 mb-4">
                   {guess.map((color, pegIndex) => (
-                    <div key={pegIndex} className="relative">
+                    <div key={pegIndex} className="">
                       <div
                         onClick={() => handlePegClick(rowIndex, pegIndex)}
                         className={`w-10 h-10 rounded-full cursor-pointer`}
@@ -210,17 +215,18 @@ const App: React.FC = () => {
                       ></div>
                       {colorPicker.rowIndex === rowIndex &&
                         colorPicker.pegIndex === pegIndex && (
-                          <div className="absolute top-12 left-0 flex space-x-1 z-10 bg-white p-2 rounded shadow-lg">
+                          <div className={`absolute ${dynamicTopClassName} left-[45%] flex space-x-1 z-10 bg-white p-2 rounded shadow-lg`}>
                             {Object.entries(COLORS).map(([key, value]) => (
-                              <div
-                                key={key}
-                                onClick={() => selectColor(value)}
-                                className="w-8 h-8 rounded-full"
-                                style={{
-                                  backgroundColor: value,
-                                  cursor: "pointer",
-                                }}
-                              ></div>
+                              <div key={key}>
+                                <div
+                                  onClick={() => selectColor(value)}
+                                  className="w-8 h-8 rounded-full"
+                                  style={{
+                                    backgroundColor: value,
+                                    cursor: "pointer",
+                                  }}
+                                ></div>
+                              </div>
                             ))}
                           </div>
                         )}

@@ -10,7 +10,7 @@ export default function ConnectModal() {
   console.log(connectors);
   return (
     <Dialog title="Connect Wallet">
-      <div className="flex flex-col gap-2 ">
+      <div className="flex flex-col gap-2">
         {connectors.map((connector: Connector) => {
           return (
             <Button
