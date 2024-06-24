@@ -1,5 +1,5 @@
-import React, { SetStateAction, useState } from 'react';
-import { NUM_ROWS, CODE_LENGTH } from '../constants/constants';
+import React, { SetStateAction, useEffect, useState } from 'react';
+import { NUM_ROWS, CODE_LENGTH, COLORS } from '../constants/constants';
 // import { toast } from 'react-hot-toast';
 // import SecretCodeSetter from '../components/SecretCodeSetter';
 import GameBoard from '../components/GameBoard';
@@ -13,11 +13,24 @@ interface ColorPickerState {
 }
 
 const Game: React.FC = () => {
-    // const [secretCode, setSecretCode] = useState<(string | null)[]>(
-    //     ["#e11d48", "#e11d48", "#e11d48", "#e11d48"]
-    // );
-    const secretCode: (string | null)[] = ["#e11d48", "#e11d48", "#e11d48", "#e11d48"];
     // const [isSettingSecretCode, setIsSettingSecretCode] = useState(true);
+    const [secretCode, setSecretCode] = useState<(string | null)[]>([]);
+    const shuffleArray = (array: string[]): string[] => {
+        const shuffledArray = array.slice();
+        for (let i = shuffledArray.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+        }
+        return shuffledArray;
+    };
+    useEffect(() => {
+        const colorValues = Object.values(COLORS);
+        const shuffledColors = shuffleArray(colorValues);
+        const selectedColors = shuffledColors.slice(0, 4);
+        console.log(selectedColors);
+        setSecretCode(selectedColors);
+    }, []);
+
     const [guesses, setGuesses] = useState<(string | null)[][]>(() =>
         Array.from({ length: NUM_ROWS }, () =>
             Array.from({ length: CODE_LENGTH }, () => null)
